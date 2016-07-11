@@ -1,0 +1,172 @@
+<?php
+
+namespace vehicle;
+use booking\Booking;
+
+/**
+ * Class RentalCar
+ * @package vehicle
+ * A subclass of RentalCar with its own data and fields. This abstracts the vehicle details completely from external classes.
+ */
+class RentalCar extends Vehicle
+{
+
+    /**
+     * @return string
+     */
+    function __toString()
+    {
+        return $this->get_vehicle_details();
+    }
+
+    /**
+     * @var string
+     *
+     * Rental company name.
+     */
+    private $rental_company_name;
+
+    /**
+     * @var string
+     *
+     * Car type like (Hatchback, Sedan etc)
+     */
+    private $car_type;
+
+    /**
+     * @var int
+     *
+     * Total number seats and that means maximum number of people that can sit.
+     */
+    private $number_of_seats;
+
+    /**
+     * @var string
+     *
+     * If there is any extra description. Like (Carry your Driving Licence etc)
+     */
+    private $extra_description;
+
+
+    /**
+     * RentalCar constructor.
+     * @param string $rental_company_name
+     * @param string $car_type
+     * @param int $number_of_seats
+     * @param string $number
+     * @param string $extra_description
+     */
+    public function __construct(string $rental_company_name, string $car_type, int $number_of_seats, string $number, string $extra_description)
+    {
+        $this->rental_company_name = $rental_company_name;
+        $this->car_type = $car_type;
+        $this->number_of_seats = $number_of_seats;
+        $this->number = $number;
+        $this->extra_description = $extra_description;
+    }
+
+    /**
+     * @return string
+     *
+     * Get the booked vehicle details.
+     */
+    public function get_vehicle_details()
+    {
+        return $this->rental_company_name . " Car with number " . $this->number;
+    }
+
+    /**
+     * @return string
+     *
+     * Get the extra details as a string
+     */
+    public function get_extra_comments(){
+        return $this->extra_description;
+    }
+
+    /**
+     * @param Booking $booking
+     * @return string
+     *
+     * Reservation details from reservation metadata
+     */
+    public function get_reservation_details(Booking $booking = null)
+    {
+        if (is_null($booking) || is_null($booking->getBookingMetadata())) {
+            return;
+        }
+
+        $reservation_details = '';
+        if(array_key_exists(self::PICKUP_LOCATION,$booking->getBookingMetadata()) && empty($booking->getBookingMetadata()[self::PICKUP_LOCATION]) ){
+            $reservation_details = $reservation_details . ' You will be picked up at ' . $booking->getBookingMetadata()[self::PICKUP_LOCATION].'.';
+        }
+
+        return $reservation_details;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRentalCompanyName()
+    {
+        return $this->rental_company_name;
+    }
+
+    /**
+     * @param string $rental_company_name
+     */
+    public function setRentalCompanyName($rental_company_name)
+    {
+        $this->rental_company_name = $rental_company_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCarType()
+    {
+        return $this->car_type;
+    }
+
+    /**
+     * @param string $car_type
+     */
+    public function setCarType($car_type)
+    {
+        $this->car_type = $car_type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfSeats()
+    {
+        return $this->number_of_seats;
+    }
+
+    /**
+     * @param int $number_of_seats
+     */
+    public function setNumberOfSeats($number_of_seats)
+    {
+        $this->number_of_seats = $number_of_seats;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtraDescription()
+    {
+        return $this->extra_description;
+    }
+
+    /**
+     * @param string $extra_description
+     */
+    public function setExtraDescription($extra_description)
+    {
+        $this->extra_description = $extra_description;
+    }
+
+
+}

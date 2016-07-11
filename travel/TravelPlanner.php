@@ -1,0 +1,17 @@
+<?php
+namespace travel;
+
+/**
+ * Interface TravelPlanner
+ * @package travel
+ *
+ * An interface that offers method to sort boarding passes.
+ */
+interface TravelPlanner
+{
+    /**
+     * @param array $boarding_passes
+     * @return mixed
+     */
+    public function get_travel_plan(array $boarding_passes);
+}
